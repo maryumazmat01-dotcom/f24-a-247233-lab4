@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Shop - Till</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="till">
+
+        <h1>Uniform Shop</h1>
+
+        <a href="index.html" class="sheet-link">
+            Back to Sheet
+        </a>
+
+        <h2>Till</h2>
+
+        <!-- Bill -->
+        <label for="bill">Bill</label>
+
+        <input
+            type="text"
+            id="bill"
+            placeholder="Bill"
+        >
+
+        <!-- Customer Paid -->
+        <label for="paid">Customer Paid</label>
+
+        <input
+            type="text"
+            id="paid"
+            placeholder="What the customer paid"
+        >
+
+        <!-- Take -->
+        <button type="button" id="take-button">
+            Take
+        </button>
+
+        <!-- Results -->
+        <div class="change-section">
+
+            <p>
+                Change:
+                <span id="change"></span>
+            </p>
+
+            <p id="owed-row">
+                Still owed:
+                <span id="owed"></span>
+            </p>
+
+            <p id="half-row">
+                Half of the change:
+                <span id="half-change"></span>
+            </p>
+
+            <!-- Task 8 -->
+            <p id="paid-kind-row">
+                Kind of paid:
+                <span id="paid-kind"></span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const takeButton =
+            document.getElementById("take-button");
+
+
+        /*
+         * The function call is above the function definition.
+         */
+        takeButton.addEventListener("click", function() {
+
+            const bill = Number(
+                document.getElementById("bill").value
+            );
+
+
+            /*
+             * When the paid box is empty, store null.
+             * Otherwise convert the value to a number.
+             */
+            const paidText =
+                document.getElementById("paid").value;
+
+            const paid = paidText === ""
+                ? null
+                : Number(paidText);
+
+
+            // Show the kind of the paid value.
+            document.getElementById("paid-kind").textContent =
+                typeof paid;
+
+
+            /*
+             * Only calculate change when a payment
+             * has actually been entered.
+             */
+            if (paid === null) {
+
+                document.getElementById("change").textContent = "";
+
+                document.getElementById("owed-row").style.display =
+                    "none";
+
+                document.getElementById("half-row").style.display =
+                    "none";
+
+                return;
+            }
+
+
+            const change = getChange(bill, paid);
+
+            document.getElementById("change").textContent =
+                change;
+
+
+            // Bill is larger than the payment.
+            if (change < 0) {
+
+                document.getElementById("owed").textContent =
+                    Math.abs(change);
+
+                document.getElementById("owed-row").style.display =
+                    "block";
+
+                document.getElementById("half-row").style.display =
+                    "none";
+
+            }
+
+
+            // Customer paid more than the bill.
+            else if (change > 0) {
+
+                document.getElementById("owed-row").style.display =
+                    "none";
+
+                document.getElementById("half-change").textContent =
+                    change / 2;
+
+                document.getElementById("half-row").style.display =
+                    "block";
+
+            }
+
+
+            // Exact payment.
+            else {
+
+                document.getElementById("owed-row").style.display =
+                    "none";
+
+                document.getElementById("half-row").style.display =
+                    "none";
+            }
+
+        });
+
+
+        /*
+         * Returns the change.
+         */
+        function getChange(bill, paid) {
+
+            return paid - bill;
+
+        }
+
+    </script>
+
+</body>
+</html>

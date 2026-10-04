@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Shop - Who is in</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="who">
+
+        <h1>Uniform Shop</h1>
+
+        <a href="index.html" class="sheet-link">
+            Back to Sheet
+        </a>
+
+        <h2>Who is in</h2>
+
+        <!-- Name Input -->
+        <label for="person-name">Name</label>
+        <input 
+            type="text" 
+            id="person-name" 
+            placeholder="Enter name"
+        >
+
+        <!-- Buttons -->
+        <div class="button-group">
+            <button type="button" id="here-btn" class="person-btn">Here</button>
+            <button type="button" id="out-btn" class="person-btn">Out</button>
+        </div>
+
+        <!-- List display -->
+        <div class="people-list-section">
+            <h3>People Status</h3>
+            <ul id="people-list"></ul>
+        </div>
+
+        <footer>
+            Roll No: 247233
+        </footer>
+
+    </div>
+
+    <script>
+        const nameInput = document.getElementById("person-name");
+        const hereBtn = document.getElementById("here-btn");
+        const outBtn = document.getElementById("out-btn");
+        const peopleList = document.getElementById("people-list");
+
+        function addPersonStatus(isInShop) {
+            const name = nameInput.value.trim();
+            if (name === "") return;
+
+            const li = document.createElement("li");
+            if (isInShop) {
+                li.textContent = `${name} is in the shop`;
+            } else {
+                li.textContent = `${name} is not in the shop`;
+            }
+
+            peopleList.appendChild(li);
+            nameInput.value = "";
+        }
+
+        hereBtn.addEventListener("click", function() {
+            addPersonStatus(true);
+        });
+
+        outBtn.addEventListener("click", function() {
+            addPersonStatus(false);
+        });
+    </script>
+
+</body>
+</html>
