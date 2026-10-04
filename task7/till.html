@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Shop - Till</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="till">
+
+        <h1>Uniform Shop</h1>
+
+        <a href="index.html" class="sheet-link">
+            Back to Sheet
+        </a>
+
+        <h2>Till</h2>
+
+        <!-- Bill -->
+        <label for="bill">Bill</label>
+
+        <input
+            type="text"
+            id="bill"
+            placeholder="Bill"
+        >
+
+        <!-- Customer Paid -->
+        <label for="paid">Customer Paid</label>
+
+        <input
+            type="text"
+            id="paid"
+            placeholder="What the customer paid"
+        >
+
+        <!-- Take -->
+        <button type="button" id="take-button">
+            Take
+        </button>
+
+        <!-- Result -->
+        <div class="change-section">
+
+            <p>
+                Change:
+                <span id="change"></span>
+            </p>
+
+            <p id="owed-row">
+                Still owed:
+                <span id="owed"></span>
+            </p>
+
+            <p id="half-row">
+                Half of the change:
+                <span id="half-change"></span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        const takeButton = document.getElementById("take-button");
+
+
+        /*
+         * The function call is ABOVE the function definition,
+         * as required by Task 7.
+         */
+        takeButton.addEventListener("click", function() {
+
+            const bill = Number(
+                document.getElementById("bill").value
+            );
+
+            const paid = Number(
+                document.getElementById("paid").value
+            );
+
+            const change = getChange(bill, paid);
+
+            document.getElementById("change").textContent =
+                change;
+
+
+            // If the customer still owes money.
+            if (change < 0) {
+
+                document.getElementById("owed").textContent =
+                    Math.abs(change);
+
+                document.getElementById("owed-row").style.display =
+                    "block";
+
+                document.getElementById("half-row").style.display =
+                    "none";
+
+            }
+
+            // If the customer paid more than the bill.
+            else if (change > 0) {
+
+                document.getElementById("owed-row").style.display =
+                    "none";
+
+                document.getElementById("half-change").textContent =
+                    change / 2;
+
+                document.getElementById("half-row").style.display =
+                    "block";
+
+            }
+
+            // If they paid exactly the bill.
+            else {
+
+                document.getElementById("owed-row").style.display =
+                    "none";
+
+                document.getElementById("half-row").style.display =
+                    "none";
+            }
+
+        });
+
+
+        /*
+         * This function returns the change.
+         *
+         * Change = customer paid - bill
+         */
+        function getChange(bill, paid) {
+
+            return paid - bill;
+
+        }
+
+    </script>
+
+</body>
+</html>

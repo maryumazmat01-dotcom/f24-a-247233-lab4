@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="sheet">
+
+        <!-- Shop Heading -->
+        <h1>Uniform Shop</h1>
+
+        <!-- Sheet Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Line</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+
+            <tbody id="sheet-body">
+            </tbody>
+        </table>
+
+        <!-- Total -->
+        <div class="total-section">
+            <p>Total: <span id="total">0</span></p>
+            <p>Kind of total: <span id="total-kind">number</span></p>
+        </div>
+
+        <!-- Information about the most recently added row -->
+        <div class="info-section">
+
+            <p>
+                Kind of Note on the row just added:
+                <span id="note-kind"></span>
+            </p>
+
+            <p>
+                Does the price text match that price as a number?
+                <span id="price-match"></span>
+            </p>
+
+            <p>
+                Are those two the same kind?
+                <span id="same-kind"></span>
+            </p>
+
+            <p id="line-kind-row">
+                Kind of Line:
+                <span id="line-kind"></span>
+            </p>
+
+        </div>
+
+        <!-- Form -->
+        <form id="item-form">
+
+            <input
+                type="text"
+                id="item"
+                placeholder="Item"
+            >
+
+            <input
+                type="number"
+                id="quantity"
+                placeholder="Quantity"
+            >
+
+            <input
+                type="text"
+                id="price"
+                placeholder="Price"
+            >
+
+            <button type="submit">Add</button>
+
+        </form>
+
+        <!-- Footer -->
+        <footer>
+            Roll No: 247233
+        </footer>
+
+    </div>
+
+
+    <script>
+
+        // The rows array starts empty.
+        const rows = [];
+
+        const sheetBody = document.getElementById("sheet-body");
+        const form = document.getElementById("item-form");
+
+
+        // Draw the table from the array.
+        function drawTable() {
+
+            sheetBody.innerHTML = "";
+
+            rows.forEach(function(row) {
+
+                const tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td>${row.item}</td>
+                    <td>${row.quantity}</td>
+                    <td>${row.price}</td>
+                    <td>${row.line}</td>
+                    <td>${row.note}</td>
+                `;
+
+                sheetBody.appendChild(tr);
+            });
+        }
+
+
+        // Calculate the total of only numeric Line values.
+        function calculateTotal() {
+
+            let total = 0;
+
+            rows.forEach(function(row) {
+
+                if (typeof row.line === "number" && !Number.isNaN(row.line)) {
+                    total += row.line;
+                }
+
+            });
+
+            return total;
+        }
+
+
+        // Update all information shown under the table.
+        function updateInformation(row) {
+
+            const total = calculateTotal();
+
+            // Show the total.
+            document.getElementById("total").textContent = total;
+
+            // Show the kind of the total.
+            document.getElementById("total-kind").textContent = typeof total;
+
+
+            // Show the kind of the Note on the row just added.
+            document.getElementById("note-kind").textContent =
+                typeof row.note;
+
+
+            /*
+             * Check whether the price text matches
+             * the price when converted to a number.
+             */
+            const priceMatches =
+                Number(row.priceText) === row.price;
+
+            document.getElementById("price-match").textContent =
+                priceMatches;
+
+
+            /*
+             * Check whether the price text and price
+             * are the same kind.
+             *
+             * priceText is a string.
+             * price is a number.
+             */
+            const sameKind =
+                typeof row.priceText === typeof row.price;
+
+            document.getElementById("same-kind").textContent =
+                sameKind;
+
+
+            /*
+             * When Line is NaN, show the kind of Line.
+             */
+            if (Number.isNaN(row.line)) {
+
+                document.getElementById("line-kind-row").style.display = "block";
+
+                document.getElementById("line-kind").textContent =
+                    typeof row.line;
+
+            } else {
+
+                document.getElementById("line-kind-row").style.display = "none";
+
+            }
+        }
+
+
+        // Add a row when Add is clicked.
+        form.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+
+            // Get the item.
+            const itemValue =
+                document.getElementById("item").value;
+
+            const item = itemValue === ""
+                ? undefined
+                : itemValue;
+
+
+            // Get the quantity.
+            const quantity = Number(
+                document.getElementById("quantity").value
+            );
+
+
+            // Keep the original price as text.
+            const priceText =
+                document.getElementById("price").value;
+
+
+            // Convert price text to a number.
+            const price = Number(priceText);
+
+
+            // Build one object.
+            const row = {
+
+                item: item,
+
+                quantity: quantity,
+
+                price: price,
+
+                // Line = quantity × price
+                line: quantity * price,
+
+                // Price text followed by quantity
+                note: priceText + quantity,
+
+                // Keep price text so Task 5 can compare it.
+                priceText: priceText
+            };
+
+
+            // Put the object at the end of the array.
+            rows.push(row);
+
+
+            // Draw the table again from the array.
+            drawTable();
+
+
+            // Update total and type information.
+            updateInformation(row);
+
+
+            // Empty all three boxes.
+            document.getElementById("item").value = "";
+            document.getElementById("quantity").value = "";
+            document.getElementById("price").value = "";
+
+        });
+
+    </script>
+
+</body>
+</html>

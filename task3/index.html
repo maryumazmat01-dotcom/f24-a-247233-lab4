@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="sheet">
+
+        <!-- Shop Heading -->
+        <h1>Uniform Shop</h1>
+
+        <!-- Sheet Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Line</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+
+            <tbody id="sheet-body">
+                <!-- Table rows are drawn from the array -->
+            </tbody>
+        </table>
+
+        <!-- Form -->
+        <form id="item-form">
+
+            <input
+                type="text"
+                id="item"
+                placeholder="Item"
+                required
+            >
+
+            <input
+                type="number"
+                id="quantity"
+                placeholder="Quantity"
+                min="1"
+                required
+            >
+
+            <input
+                type="number"
+                id="price"
+                placeholder="Price"
+                min="0"
+                step="0.01"
+                required
+            >
+
+            <button type="submit">Add</button>
+
+        </form>
+
+        <!-- Footer -->
+        <footer>
+            Roll No: 247233
+        </footer>
+
+    </div>
+
+    <script>
+
+        // The rows array starts empty.
+        const rows = [];
+
+        const sheetBody = document.getElementById("sheet-body");
+        const form = document.getElementById("item-form");
+
+
+        // Draw the table from the rows array.
+        function drawTable() {
+
+            // Clear the existing table rows.
+            sheetBody.innerHTML = "";
+
+            // Draw every object in the array.
+            rows.forEach(function(row) {
+
+                const tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td>${row.item}</td>
+                    <td>${row.quantity}</td>
+                    <td>${row.price}</td>
+                    <td>${row.line}</td>
+                    <td>${row.note}</td>
+                `;
+
+                sheetBody.appendChild(tr);
+            });
+        }
+
+
+        // Add a row when the Add button is clicked.
+        form.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            // Get values from the three boxes.
+            const item = document.getElementById("item").value;
+            const quantity = Number(
+                document.getElementById("quantity").value
+            );
+            const priceText = document.getElementById("price").value;
+            const price = Number(priceText);
+
+
+            // Build ONE object.
+            const row = {
+                item: item,
+                quantity: quantity,
+                price: price,
+
+                // Line = quantity × price
+                line: quantity * price,
+
+                // Keep price as text and put quantity
+                // at the end of that text.
+                note: priceText + quantity
+            };
+
+
+            // Put the object at the END of the array.
+            rows.push(row);
+
+
+            // Draw the table again from the array.
+            drawTable();
+
+
+            // Empty all three boxes after adding the row.
+            document.getElementById("item").value = "";
+            document.getElementById("quantity").value = "";
+            document.getElementById("price").value = "";
+
+        });
+
+    </script>
+
+</body>
+</html>

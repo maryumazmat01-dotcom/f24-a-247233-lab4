@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="sheet">
+        <h1>Uniform Shop</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Line</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+
+            <tbody id="sheet-body">
+            </tbody>
+        </table>
+
+        <footer>
+            Roll No: 247233
+        </footer>
+    </div>
+
+    <script>
+        // All sheet rows live in this single array.
+        // It starts empty as required.
+        const rows = [];
+
+        const sheetBody = document.getElementById("sheet-body");
+
+        rows.forEach(row => {
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${row.item}</td>
+                <td>${row.quantity}</td>
+                <td>${row.price}</td>
+                <td>${row.line}</td>
+                <td>${row.note}</td>
+            `;
+
+            sheetBody.appendChild(tr);
+        });
+    </script>
+
+</body>
+</html>

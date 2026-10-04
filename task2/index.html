@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="sheet">
+
+        <!-- Shop Heading -->
+        <h1>Uniform Shop</h1>
+
+        <!-- Sheet Table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Line</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+
+            <tbody id="sheet-body">
+                <!-- Rows will be added here -->
+            </tbody>
+        </table>
+
+        <!-- Task 2 Form -->
+        <form id="item-form">
+
+            <input
+                type="text"
+                id="item"
+                placeholder="Item"
+                required
+            >
+
+            <input
+                type="number"
+                id="quantity"
+                placeholder="Quantity"
+                min="1"
+                required
+            >
+
+            <input
+                type="number"
+                id="price"
+                placeholder="Price"
+                min="0"
+                step="0.01"
+                required
+            >
+
+            <button type="submit">Add</button>
+
+        </form>
+
+        <!-- Footer -->
+        <footer>
+            Roll No: 247233
+        </footer>
+
+    </div>
+
+    <script>
+
+        // All rows live in this single array.
+        // The array starts empty.
+        const rows = [];
+
+        const sheetBody = document.getElementById("sheet-body");
+
+        // Add a new row when the form is submitted
+        document.getElementById("item-form").addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const item = document.getElementById("item").value;
+            const quantity = Number(document.getElementById("quantity").value);
+            const price = Number(document.getElementById("price").value);
+
+            // Each row is one object
+            const row = {
+                item: item,
+                quantity: quantity,
+                price: price,
+                line: quantity * price,
+                note: ""
+            };
+
+            // Add the object to the rows array
+            rows.push(row);
+
+            // Create table row
+            const tr = document.createElement("tr");
+
+            tr.innerHTML = `
+                <td>${row.item}</td>
+                <td>${row.quantity}</td>
+                <td>${row.price}</td>
+                <td>${row.line}</td>
+                <td>${row.note}</td>
+            `;
+
+            sheetBody.appendChild(tr);
+
+            // Clear the form after adding
+            document.getElementById("item-form").reset();
+
+        });
+
+    </script>
+
+</body>
+</html>
