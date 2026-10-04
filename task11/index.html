@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Shop - Sheet</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="sheet">
+
+        <h1>Uniform Shop</h1>
+
+        <a href="till.html" class="till-link">Go to Till</a>
+        <a href="who.html" class="who-link">Who is in</a>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Line</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+
+            <tbody id="sheet-body">
+            </tbody>
+        </table>
+
+        <div class="total-section">
+            <p>Total: <span id="total">0</span></p>
+            <p>Kind of total: <span id="total-kind">number</span></p>
+        </div>
+
+        <div class="info-section">
+
+            <p>
+                Kind of Note on the row just added:
+                <span id="note-kind"></span>
+            </p>
+
+            <p>
+                Does the price text match that price as a number?
+                <span id="price-match"></span>
+            </p>
+
+            <p>
+                Are those two the same kind?
+                <span id="same-kind"></span>
+            </p>
+
+            <p id="line-kind-row">
+                Kind of Line:
+                <span id="line-kind"></span>
+            </p>
+
+        </div>
+
+        <form id="item-form">
+
+            <input
+                type="text"
+                id="item"
+                placeholder="Item"
+            >
+
+            <input
+                type="number"
+                id="quantity"
+                placeholder="Quantity"
+            >
+
+            <input
+                type="text"
+                id="price"
+                placeholder="Price"
+            >
+
+            <button type="submit">Add</button>
+
+        </form>
+
+        <footer>
+            Roll No: 247233
+        </footer>
+
+    </div>
+
+    <script>
+
+        const rows = [];
+
+        const sheetBody = document.getElementById("sheet-body");
+        const form = document.getElementById("item-form");
+
+
+        function drawTable() {
+
+            sheetBody.innerHTML = "";
+
+            rows.forEach(function(row) {
+
+                const tr = document.createElement("tr");
+
+                tr.innerHTML = `
+                    <td>${row.item}</td>
+                    <td>${row.quantity}</td>
+                    <td>${row.price}</td>
+                    <td>${row.line}</td>
+                    <td>${row.note}</td>
+                `;
+
+                sheetBody.appendChild(tr);
+            });
+        }
+
+
+        function calculateTotal() {
+
+            let total = 0;
+
+            rows.forEach(function(row) {
+
+                if (
+                    typeof row.line === "number" &&
+                    !Number.isNaN(row.line)
+                ) {
+                    total += row.line;
+                }
+
+            });
+
+            return total;
+        }
+
+
+        function updateInformation(row) {
+
+            const total = calculateTotal();
+
+            document.getElementById("total").textContent = total;
+
+            document.getElementById("total-kind").textContent =
+                typeof total;
+
+            document.getElementById("note-kind").textContent =
+                typeof row.note;
+
+            const priceMatches =
+                Number(row.priceText) === row.price;
+
+            document.getElementById("price-match").textContent =
+                priceMatches;
+
+            const sameKind =
+                typeof row.priceText === typeof row.price;
+
+            document.getElementById("same-kind").textContent =
+                sameKind;
+
+            if (Number.isNaN(row.line)) {
+
+                document.getElementById("line-kind-row").style.display =
+                    "block";
+
+                document.getElementById("line-kind").textContent =
+                    typeof row.line;
+
+            } else {
+
+                document.getElementById("line-kind-row").style.display =
+                    "none";
+            }
+        }
+
+
+        form.addEventListener("submit", function(event) {
+
+            event.preventDefault();
+
+            const itemValue =
+                document.getElementById("item").value;
+
+            const item = itemValue === ""
+                ? undefined
+                : itemValue;
+
+            const quantity = Number(
+                document.getElementById("quantity").value
+            );
+
+            const priceText =
+                document.getElementById("price").value;
+
+            const price = Number(priceText);
+
+            const row = {
+
+                item: item,
+
+                quantity: quantity,
+
+                price: price,
+
+                line: quantity * price,
+
+                note: priceText + quantity,
+
+                priceText: priceText
+            };
+
+            rows.push(row);
+
+            drawTable();
+
+            updateInformation(row);
+
+            document.getElementById("item").value = "";
+            document.getElementById("quantity").value = "";
+            document.getElementById("price").value = "";
+
+        });
+
+    </script>
+
+</body>
+</html>

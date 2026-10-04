@@ -1,0 +1,195 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.sheet,
+.till,
+.who {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    background-color: white;
+    padding: 25px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Shop heading */
+h1 {
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    background-color: skyblue;
+    color: white;
+}
+
+h2 {
+    color: skyblue;
+    margin-top: 25px;
+}
+
+/* Page links */
+.till-link,
+.sheet-link,
+.who-link {
+    display: inline-block;
+    margin: 15px 10px 15px 0;
+    padding: 10px 18px;
+    background-color: skyblue;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+.till-link:hover,
+.sheet-link:hover,
+.who-link:hover {
+    background-color: #5eb3d3;
+}
+
+/* Table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 0;
+}
+
+th,
+td {
+    border: 1px solid #ccc;
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: skyblue;
+    color: white;
+}
+
+/* Total section */
+.total-section {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #eaf7fc;
+    border: 1px solid #ccc;
+}
+
+.total-section p {
+    margin: 5px 0;
+}
+
+/* Information section */
+.info-section {
+    margin-top: 15px;
+    padding: 15px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+}
+
+.info-section p {
+    margin: 8px 0;
+}
+
+/* Sheet form */
+form {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+form input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form button,
+#take-button,
+.person-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 4px;
+    background-color: skyblue;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover,
+#take-button:hover,
+.person-btn:hover {
+    background-color: #5eb3d3;
+}
+
+/* Till inputs */
+.till label,
+.who label {
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.till input,
+.who input {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+#take-button {
+    margin-top: 20px;
+}
+
+/* Who is in form buttons */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* List section */
+.people-list-section {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #eaf7fc;
+    border: 1px solid #ccc;
+}
+
+.people-list-section ul {
+    margin: 10px 0 0 20px;
+    padding: 0;
+}
+
+.people-list-section li {
+    margin-bottom: 5px;
+}
+
+/* Change section */
+.change-section {
+    margin-top: 25px;
+    padding: 15px;
+    background-color: #eaf7fc;
+    border: 1px solid #ccc;
+}
+
+.change-section p {
+    margin: 8px 0;
+}
+
+/* Footer */
+footer {
+    margin-top: 20px;
+    padding: 15px;
+    text-align: center;
+    background-color: skyblue;
+    color: white;
+    font-weight: bold;
+}
